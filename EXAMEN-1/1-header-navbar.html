@@ -1,0 +1,128 @@
+<!-- 
+  Autor: Jona Dieguez
+  Rol: Diseñador
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Mejorada - Header</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Metadatos de autor -->
+    <meta name="author" content="Jona Dieguez">
+    <meta name="designer" content="Jona Dieguez">
+    <style>
+        .header-bg {
+            background: url('https://via.placeholder.com/1600x500?text=Header+Background') center/cover no-repeat;
+            min-height: 350px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .custom-navbar {
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.82);
+            border-radius: 12px;
+            width: 80%;
+            z-index: 2;
+            padding: 0.5rem 1.5rem;
+            justify-content: center;
+        }
+
+        /* Centramos el menú */
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Botón contacto a la derecha */
+        .navbar .btn {
+            margin-left: auto;
+        }
+
+        /* Texto de contacto más pequeño y con menos separación */
+        .contacto-header {
+            position: relative;
+            top: 40px;
+            z-index: 3;
+            width: 100%;
+            text-align: center;
+            font-size: 0.88rem;
+            color: #fff;
+            text-shadow: 1px 1px 8px #333;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .custom-navbar {
+                width: 98%;
+                margin-top: 30px;
+                padding: 0.2rem 0.4rem;
+            }
+
+            .header-bg {
+                min-height: 220px;
+            }
+
+            .contacto-header {
+                font-size: 0.78rem;
+                top: 22px;
+            }
+
+            .navbar-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER CON IMAGEN DE FONDO Y NAVBAR -->
+    <header class="header-bg">
+        <!-- texto contacto centrado y más pequeño -->
+        <div class="contacto-header">
+            info@tusitio.com | +34 600 000 000
+        </div>
+        <!-- Navbar centrado -->
+        <nav class="navbar navbar-expand-lg custom-navbar shadow">
+            <div class="container-fluid px-0 justify-content-center">
+                <!-- Logo -->
+                <a href="#" class="navbar-brand me-4">
+                    <img src="https://via.placeholder.com/80x40?text=Logo" alt="Logo" height="40">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#caracteristicas">Características/Beneficios</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#demostracion">Demostración</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#prueba-social">Prueba Social</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#precios">Precios</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    </ul>
+                    <!-- Botón contacto alineado a la derecha -->
+                    <a href="#contacto" class="btn btn-outline-primary ms-lg-3">Contactar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
