@@ -1,219 +1,288 @@
-<!--
-  Autor: Jona Dieguez
-  Rol: Diseñador
-  Archivo único: landing page completa (HTML + STYLE + SCRIPT)
-  Contenido: navbar de contacto, navbar principal translúcido y sticky,
-            hero con carrusel a pantalla completa (imágenes full cover) y
-            texto/CTA fijo centrado, secciones (imagen + texto), cards
-            generadas desde un array y footer en 4 columnas (última columna: formulario).
-  Bootstrap 5 enlazado por CDN y fuentes Google incluidas.
--->
-
-<!--
-  Autor: Jona Dieguez
-  Rol: Diseñador
-  Archivo único: landing page (HTML + STYLE + SCRIPT)
-  - Navbar de contacto (arriba, no sticky)
-  - Navbar translúcida centrada sobre el hero (más ancha, no se desplaza del centro)
-  - Hero con carousel automático (imágenes full-cover). Título y subtítulo directamente sobre la imagen (sin caja detrás).
-  - Primera sección con estructura tipo imagen a la derecha y texto / listas a la izquierda (como imagen adjunta).
-  - Sección de tarjetas con efecto visual (estilos inspirados en el SCSS que enviaste, transformado a CSS puro).
-  - Footer y otros bloques básicos.
-  - Bootstrap + Google Fonts incluidos.
--->
-
-<!--
-  Autor: Jona Dieguez
-  Rol: Diseñador
-  Single-file landing: HTML + STYLE + SCRIPT
-  Cambios solicitados:
-   - main-nav (translúcida) mucho más ancha, fija (sticky) y centrada,
-     con la mitad de su altura empezando sobre la barra de contacto superior.
-   - título/subtítulo del hero directamente sobre la imagen (sin caja).
-   - 4 tarjetas que usan iconos de Bootstrap como "imagen".
-   - 4 secciones para lavandería creadas.
-   - Bootstrap 5 + Google Fonts + Bootstrap Icons incluidos.
--->
-
-<!--
-  Autor: Jona Dieguez
-  Rol: Diseñador
-  Archivo único: landing page (HTML + STYLE + SCRIPT)
-  Actualización: se ha insertado la sección de Testimonios directamente en este archivo
-  y se ha actualizado la imagen vertical de la primera sección con la URL proporcionada.
--->
-
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lavandería - Landing</title>
+  <title>Lavandería - Landing (todo en un archivo)</title>
 
-  <!-- Bootstrap 5 CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Google Font: Rubik -->
+  <!-- Google Font: Rubik (usado en estilos) -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- Bootstrap icons -->
+  <!-- Bootstrap icons (CDN) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
+  <!-- ================= STYLES (CSS) START =================
+       Abajo están todos los estilos agrupados y comentados.
+       - No hay archivos externos de estilo; está todo aquí para que sea fácil editar.
+  ======================================================= -->
   <style>
-    :root{
-      --azul-oscuro:#07224e; --azul-medio:#2662a6; --azul-footer:#0b345f; --azul-cta:#1E88FF;
-      --blanco:#ffffff; --nav-contact-height:64px; --font-sans:'Rubik',system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      --sep-bg: rgba(11,52,95,0.04); --bullet-blue:#4fb0ff;
-    }
+  /*!
+    styles: todo en un solo archivo
+    - Comentarios en español para indicar cada bloque y su propósito.
+    - Mantén esto ordenado: variables, layout, componentes, accesibilidad, responsive.
+  */
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:var(--font-sans); color:var(--azul-oscuro); background:#fff;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; scroll-behavior:smooth;
-    }
+  /* ===== Variables y reset básico ===== */
+  :root{
+    --azul-oscuro:#07224e;
+    --azul-medio:#2662a6;
+    --azul-footer:#0b345f;
+    --azul-cta:#1E88FF;
+    --blanco:#ffffff;
+    --nav-contact-height:64px;
+    --sep-bg: rgba(11,52,95,0.04);
+    --bullet-blue:#4fb0ff;
+    --font-sans: 'Rubik', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
 
-    /* Skip link */
-    .skip-link {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: #003a8c;
-      color: #fff;
-      padding: 8px 12px;
-      z-index: 10000;
-      border-radius: 6px;
-      transform: translateY(-120%);
-      transition: transform .18s ease, opacity .12s ease;
-      opacity:0;
-    }
-    .skip-link:focus { transform: translateY(0); opacity:1; outline: 3px solid #fff; }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--font-sans);
+    color:var(--azul-oscuro);
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    scroll-behavior:smooth;
+  }
 
-    /* Contact top */
-    .contact-top{ height:var(--nav-contact-height); display:flex; align-items:center; gap:12px;
-      background: linear-gradient(180deg,var(--azul-oscuro), var(--azul-footer)); color:var(--blanco);
-      padding:0 18px; z-index:300; position:relative; font-size:9px; font-weight:400; }
-    .contact-top .left { flex:0 0 auto; display:flex; align-items:center; padding-left:16px; }
-    .contact-top img#contactLogo { height:56px; width:auto; display:block; margin-right:8px; }
-    .contact-top .center { flex:1 1 auto; text-align:center; color:var(--blanco); font-weight:400; line-height:1.05; }
-    .contact-top a { color:var(--blanco); text-decoration:none; font-weight:400; }
+  /* ===== Skip link (aparece al tabear) ===== */
+  .skip-link{
+    position:absolute;
+    top:8px;
+    left:8px;
+    background:#003a8c;
+    color:#fff;
+    padding:8px 12px;
+    z-index:10000;
+    border-radius:6px;
+    transform:translateY(-120%);
+    transition:transform .18s ease, opacity .12s ease;
+    opacity:0;
+  }
+  .skip-link:focus{ transform:translateY(0); opacity:1; outline:3px solid #fff; }
 
-    main{ margin-top: calc(var(--nav-contact-height) + 80px); }
+  /* ===== Contact top: barra superior con logo y contacto ===== */
+  .contact-top{
+    height:var(--nav-contact-height);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background: linear-gradient(180deg,var(--azul-oscuro), var(--azul-footer));
+    color:var(--blanco);
+    padding:0 18px;
+    z-index:300;
+    position:relative;
+    font-size:9px;
+    font-weight:400;
+  }
+  .contact-top .left{ flex:0 0 auto; display:flex; align-items:center; padding-left:16px; }
+  .contact-top img#contactLogo{ height:56px; width:auto; display:block; margin-right:8px; }
+  .contact-top .center{ flex:1 1 auto; text-align:center; color:var(--blanco); font-weight:400; line-height:1.05; }
+  .contact-top a{ color:var(--blanco); text-decoration:none; font-weight:400; }
 
-    /* Main nav (translucent blue) */
-    .main-nav{
-      position:fixed; top: calc(var(--nav-contact-height) / 2 + 12px); left:50%; transform:translateX(-50%);
-      z-index:400; width:calc(100% - 48px); max-width:1300px; display:flex; align-items:center; padding:10px 18px;
-      border-radius:10px; background: rgba(30,136,255,0.12); backdrop-filter: blur(6px); box-shadow: 0 8px 28px rgba(2,16,50,0.06);
-      color:var(--blanco); font-size:9px;
-    }
-    .main-nav .brand { width:48px; }
-    .main-nav .links{ position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:18px; align-items:center;
-      font-size:14px; text-transform:uppercase; font-weight:700; letter-spacing:0.6px; }
-    .main-nav .links a {
-      color: var(--blanco); text-decoration:none; padding:6px 8px; position:relative; transition: color .18s ease; font-weight:700;
-    }
-    .main-nav .links a::after {
-      content:""; position:absolute; left:12%; right:12%; bottom:-6px; height:2px; background:transparent; transform-origin:left;
-      transform:scaleX(0); transition:transform .18s ease, background .18s ease; border-radius:2px;
-    }
-    .main-nav .links a:hover::after, .main-nav .links a:focus::after { background: var(--blanco); transform:scaleX(1); }
-    .main-nav .cta-wrapper { margin-left:auto; display:flex; align-items:center; }
+  /* ===== Main nav: translúcido azul claro, enlaces blancos y subrayado fino ===== */
+  .main-nav{
+    position:fixed;
+    top: calc(var(--nav-contact-height)/2 + 12px);
+    left:50%;
+    transform:translateX(-50%);
+    z-index:400;
+    width:calc(100% - 48px);
+    max-width:1300px;
+    display:flex;
+    align-items:center;
+    padding:10px 18px;
+    border-radius:10px;
+    background: rgba(30,136,255,0.12);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 28px rgba(2,16,50,0.06);
+    color:var(--blanco);
+    font-size:9px;
+  }
+  .main-nav .brand{ width:48px; }
+  .main-nav .links{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:18px;
+    align-items:center;
+    font-size:14px;
+    text-transform:uppercase;
+    font-weight:700;
+    letter-spacing:0.6px;
+  }
+  .main-nav .links a{
+    color:var(--blanco);
+    text-decoration:none;
+    padding:6px 8px;
+    position:relative;
+    transition:color .18s ease;
+    font-weight:700;
+  }
+  .main-nav .links a::after{
+    content:"";
+    position:absolute;
+    left:12%;
+    right:12%;
+    bottom:-6px;
+    height:2px;
+    background:transparent;
+    transform-origin:left;
+    transform:scaleX(0);
+    transition:transform .18s ease, background .18s ease;
+    border-radius:2px;
+  }
+  .main-nav .links a:hover::after,
+  .main-nav .links a:focus::after{ background:var(--blanco); transform:scaleX(1); }
+  .main-nav .cta-wrapper{ margin-left:auto; display:flex; align-items:center; }
+  .main-nav.sticky{ background: rgba(30,136,255,0.16); box-shadow: 0 10px 30px rgba(2,16,50,0.08); }
 
-    .main-nav.sticky { background: rgba(30,136,255,0.16); box-shadow: 0 10px 30px rgba(2,16,50,0.08); }
+  /* ===== HERO (pantalla completa) ===== */
+  .hero{ position:relative; width:100%; height:100vh; min-height:100vh; overflow:hidden; margin-top: calc(-1 * var(--nav-contact-height)); }
+  .carousel, .carousel-inner, .carousel-item{ height:100%; }
+  .carousel-item img{ object-fit:cover; width:100%; height:100%; display:block; }
+  .hero-overlay{ position:absolute; inset:0; z-index:2; background: rgba(7,34,78,0.06); pointer-events:none; }
+  .hero-content{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:300; text-align:center; color:var(--blanco); }
+  .hero-content h1{ margin:0; font-size:40px; font-weight:700; text-shadow:0 6px 18px rgba(0,0,0,0.35); }
+  .hero-content p{ margin:12px 0 18px; font-size:18px; text-shadow:0 6px 14px rgba(0,0,0,0.28); }
+  .btn-cta{ background:transparent; color:var(--blanco); border:2px solid rgba(255,255,255,0.06); padding:10px 18px; border-radius:8px; font-weight:700; }
+  .btn-cta:hover{ background:var(--azul-footer); color:#fff; transform:translateY(-2px); }
 
-    /* HERO full screen */
-    .hero{ position:relative; width:100%; height:100vh; min-height:100vh; overflow:hidden; margin-top: calc(-1 * var(--nav-contact-height)); }
-    .carousel, .carousel-inner, .carousel-item{ height:100%; }
-    .carousel-item img{ object-fit:cover; width:100%; height:100%; display:block; }
+  /* ===== Translucent cards on hero bottom ===== */
+  .hero-bottom-cards{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    bottom:22px;
+    z-index:350;
+    display:flex;
+    gap:14px;
+    padding:8px;
+    pointer-events:auto;
+    max-width:calc(100% - 40px);
+    justify-content:center;
+  }
+  .hero-card{
+    background: rgba(255,255,255,0.08);
+    color:#fff;
+    min-width:220px;
+    max-width:340px;
+    border-radius:10px;
+    padding:12px 16px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 10px 30px rgba(2,16,50,0.12);
+    text-align:left;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+  }
+  .hero-card .icon{ flex:0 0 44px; height:44px; width:44px; border-radius:8px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.06); color:#fff; font-size:20px; }
+  .hero-card .content{ flex:1 1 auto; }
+  .hero-card h5{ margin:0 0 6px 0; font-size:1rem; font-weight:700; color:#fff; }
+  .hero-card p{ margin:0; font-size:0.92rem; color: rgba(255,255,255,0.92); line-height:1.25; }
 
-    .hero-overlay{ position:absolute; inset:0; z-index:2; background: rgba(7,34,78,0.06); pointer-events:none; }
+  @media (max-width:920px){
+    .hero-bottom-cards{ flex-direction:column; align-items:center; bottom:14px; }
+    .hero-card{ width:92%; max-width:520px; }
+  }
 
-    .hero-content{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:300; text-align:center; color:var(--blanco); }
-    .hero-content h1{ margin:0; font-size:40px; font-weight:700; text-shadow:0 6px 18px rgba(0,0,0,0.35); }
-    .hero-content p{ margin:12px 0 18px; font-size:18px; text-shadow:0 6px 14px rgba(0,0,0,0.28); }
+  /* ===== Sections alternated backgrounds ===== */
+  .section--white{ background:#fff; }
+  .section--alt{ background: var(--sep-bg); }
 
-    .btn-cta{ background:transparent; color:var(--blanco); border:2px solid rgba(255,255,255,0.06); padding:10px 18px; border-radius:8px; font-weight:700; }
-    .btn-cta:hover{ background: var(--azul-footer); color:#fff; transform: translateY(-2px); }
+  /* CHARACTERISTICS heading use same look as pricing header */
+  #caracteristicas .section-title{ font-size:2.5rem; font-weight:400; line-height:1.1; margin-bottom:.6rem; }
+  #caracteristicas .section-subtitle{ font-size:1.1rem; color:rgba(7,34,78,0.7); }
 
-    /* translucent cards over hero bottom */
-    .hero-bottom-cards{ position:absolute; left:50%; transform:translateX(-50%); bottom:22px; z-index:350; display:flex; gap:14px; padding:8px; pointer-events:auto; max-width:calc(100% - 40px); justify-content:center; }
-    .hero-card{ background: rgba(255,255,255,0.08); color:#fff; min-width:220px; max-width:340px; border-radius:10px; padding:12px 16px; backdrop-filter: blur(6px); box-shadow: 0 10px 30px rgba(2,16,50,0.12); text-align:left; display:flex; gap:12px; align-items:flex-start; }
-    .hero-card .icon{ flex:0 0 44px; height:44px; width:44px; border-radius:8px; display:flex; align-items:center; justify-content:center; background: rgba(255,255,255,0.06); color:#fff; font-size:20px; }
-    .hero-card .content{ flex:1 1 auto; }
-    .hero-card h5{ margin:0 0 6px 0; font-size:1rem; font-weight:700; color:#fff; }
-    .hero-card p{ margin:0; font-size:0.92rem; color: rgba(255,255,255,0.92); line-height:1.25; }
+  /* bullets in two columns */
+  .round-bullets{
+    padding-left:0;
+    margin-left:0;
+    list-style:none;
+    max-width:640px;
+    margin:12px auto 0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px 28px;
+  }
+  .round-bullets li{ display:flex; align-items:flex-start; gap:12px; padding:6px 0; color:rgba(7,34,78,0.9); }
+  .round-bullets li::before{ content:""; display:inline-block; width:10px; height:10px; background:var(--bullet-blue); border-radius:50%; margin-top:6px; flex:0 0 auto; }
 
-    /* SECTION STYLES */
-    .section--white{ background:#fff; }
-    .section--alt{ background: var(--sep-bg); }
+  /* ===== Service cards & pricing cards ===== */
+  .service-card{ border:1px solid #e6e6e6; border-radius:6px; padding:18px 10px; height:100%; display:flex; align-items:center; justify-content:center; text-align:center; background:#fff; }
+  .service-card .bi{ font-size:44px; color:var(--azul-medio); margin-bottom:8px; }
+  .service-card .card-title{ margin-top:6px; font-size:1.05rem; font-weight:700; color:var(--azul-oscuro); }
+  .service-card .card-text{ color:rgba(7,34,78,0.8); margin-bottom:12px; }
 
-    #caracteristicas .section-title{ font-size:2.5rem; font-weight:400; line-height:1.1; margin-bottom:.6rem; }
-    #caracteristicas .section-subtitle{ font-size:1.1rem; color:rgba(7,34,78,0.7); }
+  .pricing-row{ display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start; margin-bottom:28px; }
+  .pricing-card{ width:18rem; border-radius:8px; overflow:hidden; border:1px solid rgba(38,98,166,0.18); background:#fff; box-shadow: 0 6px 14px rgba(38,98,166,0.06); }
+  .pricing-card .card-top{ height:120px; display:flex; align-items:center; justify-content:center; background:#fff; }
+  .pricing-card .card-top .bi{ font-size:48px; color:var(--azul-medio); }
+  .pricing-card .card-body{ padding:22px; text-align:center; }
+  .pricing-card .card-title{ font-size:1.25rem; font-weight:700; color:var(--azul-oscuro); margin-bottom:8px; }
 
-    .round-bullets{ padding-left:0; margin-left:0; list-style:none; max-width:640px; margin:12px auto 0; display:grid; grid-template-columns:repeat(2,1fr); gap:8px 28px; }
-    .round-bullets li{ display:flex; align-items:flex-start; gap:12px; padding:6px 0; color:rgba(7,34,78,0.9); }
-    .round-bullets li::before{ content:""; display:inline-block; width:10px; height:10px; background:var(--bullet-blue); border-radius:50%; margin-top:6px; flex:0 0 auto; }
+  .btn-primary{ background:var(--azul-cta); color:#fff; border:none; font-weight:700; border-radius:8px; }
+  .btn-primary:hover{ background:var(--azul-footer); }
 
-    /* service cards */
-    .service-card{ border:1px solid #e6e6e6; border-radius:6px; padding:18px 10px; height:100%; display:flex; align-items:center; justify-content:center; text-align:center; background:#fff; }
-    .service-card .bi{ font-size:44px; color:var(--azul-medio); margin-bottom:8px; }
-    .service-card .card-title{ margin-top:6px; font-size:1.05rem; font-weight:700; color:var(--azul-oscuro); }
-    .service-card .card-text{ color:rgba(7,34,78,0.8); margin-bottom:12px; }
+  /* ===== Accessibility: visible focus for keyboard users ===== */
+  :focus{ outline:none; }
+  a:focus, button:focus, input:focus, textarea:focus{ outline-offset:3px; }
+  a:focus-visible, button:focus-visible, .service-card:focus-visible, .pricing-card:focus-visible, .hero-card:focus-visible{
+    outline:3px solid #fff;
+    outline-offset:4px;
+    box-shadow:0 0 0 4px rgba(11,52,95,0.18);
+  }
+  .service-card[tabindex], .pricing-card[tabindex], .hero-card[tabindex]{ cursor:pointer; }
+  .service-card[tabindex]:focus-visible, .pricing-card[tabindex]:focus-visible{ transform:translateY(-2px); transition:transform .12s ease; }
 
-    /* pricing */
-    .pricing-row{ display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start; margin-bottom:28px; }
-    .pricing-card{ width:18rem; border-radius:8px; overflow:hidden; border:1px solid rgba(38,98,166,0.18); background:#fff; box-shadow:0 6px 14px rgba(38,98,166,0.06); }
-    .pricing-card .card-top{ height:120px; display:flex; align-items:center; justify-content:center; background:#fff; }
-    .pricing-card .card-top .bi{ font-size:48px; color:var(--azul-medio); }
-    .pricing-card .card-body{ padding:22px; text-align:center; }
-    .pricing-card .card-title{ font-size:1.25rem; font-weight:700; color:var(--azul-oscuro); margin-bottom:8px; }
-    .pricing-card .card-text{ margin-bottom:14px; color:rgba(7,34,78,0.85); }
+  /* ===== Back to top button ===== */
+  #backToTop{ position:fixed; right:18px; bottom:18px; z-index:999; width:48px; height:48px; border-radius:999px; background:var(--azul-cta); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(2,16,50,0.16); border:none; cursor:pointer; transition:background .18s ease, transform .12s ease, opacity .18s ease; opacity:0; pointer-events:none; }
+  #backToTop.show{ opacity:1; pointer-events:auto; }
+  #backToTop:hover{ background:var(--azul-footer); transform:translateY(-3px); }
 
-    .btn-primary{ background:var(--azul-cta); color:#fff; border:none; font-weight:700; border-radius:8px; }
-    .btn-primary:hover{ background:var(--azul-footer); }
+  /* ===== Footer ===== */
+  footer.site-footer{ background: linear-gradient(180deg,var(--azul-oscuro), var(--azul-footer)); color:var(--blanco); padding:28px 12px; }
+  footer .footer-col h6{ color:var(--blanco); font-weight:700; }
 
-    /* Focus visible styles for keyboard navigation */
-    :focus { outline: none; }
-    a:focus, button:focus, input:focus, textarea:focus { outline-offset:3px; }
-    a:focus-visible, button:focus-visible, .service-card:focus-visible, .pricing-card:focus-visible, .hero-card:focus-visible {
-      outline: 3px solid #fff; /* high contrast ring on dark areas */
-      outline-offset: 4px;
-      box-shadow: 0 0 0 4px rgba(11,52,95,0.18);
-    }
+  /* ===== Responsive tweaks ===== */
+  @media (max-width:768px){
+    .main-nav .links{ display:none; }
+    .round-bullets{ grid-template-columns:1fr; }
+  }
 
-    /* make cards focusable look */
-    .service-card[tabindex], .pricing-card[tabindex], .hero-card[tabindex] { cursor: pointer; }
-    .service-card[tabindex]:focus-visible, .pricing-card[tabindex]:focus-visible { transform: translateY(-2px); transition: transform .12s ease; }
-
-    /* back to top */
-    #backToTop{ position:fixed; right:18px; bottom:18px; z-index:999; width:48px; height:48px; border-radius:999px; background:var(--azul-cta); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(2,16,50,0.16); border:none; cursor:pointer; transition:background .18s ease, transform .12s ease, opacity .18s ease; opacity:0; pointer-events:none; }
-    #backToTop.show{ opacity:1; pointer-events:auto; } #backToTop:hover{ background:var(--azul-footer); transform:translateY(-3px); }
-
-    footer.site-footer{ background: linear-gradient(180deg,var(--azul-oscuro), var(--azul-footer)); color:var(--blanco); padding:28px 12px; }
-    footer .footer-col h6{ color:var(--blanco); font-weight:700; }
-
-    @media (max-width:920px) { .hero-bottom-cards{ flex-direction:column; align-items:center; bottom:14px; } .hero-card{ width:92%; max-width:520px; } }
-    @media (max-width:768px) { .main-nav .links{ display:none; } .round-bullets{ grid-template-columns:1fr; } }
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .carousel, .carousel-inner, .carousel-item { scroll-behavior: auto; }
-    }
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce){
+    .carousel, .carousel-inner, .carousel-item{ scroll-behavior: auto; }
+  }
   </style>
+  <!-- ================= STYLES (CSS) END ================= -->
+
 </head>
 <body>
-  <!-- Skip link for keyboard users -->
+  <!-- ================= HTML CONTENT (STRUCTURE) START =================
+       Aquí está toda la estructura HTML (no cambié la jerarquía).
+       Se han añadido roles/aria y atributos de accesibilidad.
+  ================================================================ -->
+
+  <!-- Skip link -->
   <a href="#main" class="skip-link">Saltar al contenido (Tab)</a>
 
-  <!-- CONTACT TOP -->
+  <!-- Contact top -->
   <div class="contact-top" role="banner" aria-label="Información de contacto">
     <div class="left">
       <img id="contactLogo" src="https://laundryluxee.com/wp-content/uploads/2024/01/WhatsApp_Image_2024-01-29_at_15.34.56_06eda5cf-removebg-preview-1.png" alt="Logo lavandería" loading="lazy">
     </div>
-    <div class="center">Calle Lavanda 12, Ciudad &nbsp; | &nbsp;<a href="mailto:info@lavanderiaejemplo.com">info@lavanderiaejemplo.com</a> &nbsp; | &nbsp;<a href="tel:+34600000000">+34 600 000 000</a></div>
+    <div class="center">
+      Calle Lavanda 12, Ciudad &nbsp; | &nbsp;
+      <a href="mailto:info@lavanderiaejemplo.com">info@lavanderiaejemplo.com</a> &nbsp; | &nbsp;
+      <a href="tel:+34600000000">+34 600 000 000</a>
+    </div>
   </div>
 
-  <!-- NAV -->
+  <!-- Navigation -->
   <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
     <div class="brand" aria-hidden="true"></div>
 
@@ -230,7 +299,7 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- Hero -->
   <header class="hero" id="home" role="region" aria-label="Hero principal">
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" aria-roledescription="carousel" aria-label="Carrusel de imágenes principal">
       <div class="carousel-inner">
@@ -249,12 +318,10 @@
       </div>
 
       <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Anterior slide">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Siguiente slide">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span>
       </button>
     </div>
 
@@ -266,7 +333,7 @@
       <button class="btn-cta">Comenzar ahora</button>
     </div>
 
-    <!-- translucent cards -->
+    <!-- Translucent cards -->
     <div class="hero-bottom-cards" aria-hidden="false">
       <div class="hero-card" tabindex="0" role="article" aria-label="Recogida y entrega">
         <div class="icon" aria-hidden="true"><i class="bi bi-truck"></i></div>
@@ -285,6 +352,7 @@
     </div>
   </header>
 
+  <!-- Main content (secciones) -->
   <main id="main" role="main" aria-label="Contenido principal">
     <!-- Características -->
     <section id="caracteristicas" class="section--white py-5" role="region" aria-labelledby="caracTitle">
@@ -316,6 +384,7 @@
           <h1 id="servTitle" class="display-4 fw-normal">Servicios</h1>
           <p class="lead text-muted">Nuestros servicios principales</p>
         </div>
+
         <div class="row" id="cardsGrid" aria-live="polite"></div>
       </div>
     </section>
@@ -425,188 +494,197 @@
 
   </main>
 
-  <!-- BACK TO TOP -->
+  <!-- Back to top -->
   <button id="backToTop" aria-label="Volver arriba"><i class="bi bi-arrow-up" aria-hidden="true"></i></button>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="site-footer" role="contentinfo" aria-label="Pie de página">
     <div class="container py-4">
       <div class="row gy-4">
-        <div class="col-md-3 footer-col"><h6>Sobre Nosotros</h6><p class="text-white-50 small">Lavandería profesional: cuidado textil, recogida y entrega en 24-72h.</p><div class="social-links"><a href="#" class="text-white me-2" aria-label="Facebook"><i class="bi bi-facebook"></i></a><a href="#" class="text-white me-2" aria-label="Instagram"><i class="bi bi-instagram"></i></a><a href="#" class="text-white" aria-label="Twitter"><i class="bi bi-twitter"></i></a></div></div>
-        <div class="col-md-3 footer-col"><h6>Contacto</h6><p class="text-white-50 small mb-0">info@lavanderiaejemplo.com</p><p class="text-white-50 small">+34 600 000 000</p></div>
-        <div class="col-md-3 footer-col"><h6>Textos legales</h6><p class="text-white-50 small mb-1">Términos y condiciones</p><p class="text-white-50 small mb-1">Política de privacidad</p></div>
-        <div class="col-md-3 footer-col"><h6>Escríbenos</h6><form id="contactFormFooter"><div class="mb-2"><input class="form-control form-control-sm" type="text" name="name" placeholder="Nombre" required></div><div class="mb-2"><input class="form-control form-control-sm" type="email" name="email" placeholder="Email" required></div><div class="mb-2"><textarea class="form-control form-control-sm" name="message" rows="2" placeholder="Mensaje"></textarea></div><button class="btn btn-sm btn-primary w-100" type="submit">Enviar</button></form></div>
+        <div class="col-md-3 footer-col">
+          <h6>Sobre Nosotros</h6>
+          <p class="text-white-50 small">Lavandería profesional: cuidado textil, recogida y entrega en 24-72h.</p>
+          <div class="social-links">
+            <a href="#" class="text-white me-2" aria-label="Facebook"><i class="bi bi-facebook" aria-hidden="true"></i></a>
+            <a href="#" class="text-white me-2" aria-label="Instagram"><i class="bi bi-instagram" aria-hidden="true"></i></a>
+            <a href="#" class="text-white" aria-label="Twitter"><i class="bi bi-twitter" aria-hidden="true"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-3 footer-col">
+          <h6>Contacto</h6>
+          <p class="text-white-50 small mb-0">info@lavanderiaejemplo.com</p>
+          <p class="text-white-50 small">+34 600 000 000</p>
+        </div>
+
+        <div class="col-md-3 footer-col">
+          <h6>Textos legales</h6>
+          <p class="text-white-50 small mb-1">Términos y condiciones</p>
+          <p class="text-white-50 small mb-1">Política de privacidad</p>
+        </div>
+
+        <div class="col-md-3 footer-col">
+          <h6>Escríbenos</h6>
+          <form id="contactFormFooter">
+            <div class="mb-2"><input class="form-control form-control-sm" type="text" name="name" placeholder="Nombre" required></div>
+            <div class="mb-2"><input class="form-control form-control-sm" type="email" name="email" placeholder="Email" required></div>
+            <div class="mb-2"><textarea class="form-control form-control-sm" name="message" rows="2" placeholder="Mensaje"></textarea></div>
+            <button class="btn btn-sm btn-primary w-100" type="submit">Enviar</button>
+          </form>
+        </div>
       </div>
+
       <div class="text-center text-white-50 mt-3 small">Copyright © 2025 Lavandería — Todos los derechos reservados</div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- ================= SCRIPTS (JS) START =================
+       Aquí están todos los scripts agrupados y comentados.
+       - Inicializa carruseles, mejora accesibilidad y agrega comportamientos.
+       - No se cambia la estructura, solo se añade comportamiento.
+  ======================================================= -->
+  <!-- Bootstrap bundle (incluye Popper) necesario para carousels y componentes -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // --- Accessibility & Keyboard Enhancements (no structural changes) ---
+  /**
+   * scripts: todo en un solo archivo
+   * Comentarios en español explican cada bloque.
+   */
 
-    // 1) Make interactive cards focusable and activate via Enter / Space
-    (function(){
-      function setupFocusableCards() {
-        const serviceCards = document.querySelectorAll('.service-card');
-        serviceCards.forEach(card=>{
-          // ensure tabindex (do not change DOM structure)
-          if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex','0');
-          // on Enter or Space -> trigger first button inside (if any)
-          card.addEventListener('keydown', function(e){
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              const btn = card.querySelector('button, a');
-              if (btn) btn.focus(), btn.click();
-            }
-          });
-          // click via mouse still works as before
-        });
+  /* --- Helper para DOM ready --- */
+  function onReady(fn){
+    if (document.readyState !== 'loading') fn();
+    else document.addEventListener('DOMContentLoaded', fn);
+  }
 
-        const pricingCards = document.querySelectorAll('.pricing-card');
-        pricingCards.forEach(card=>{
-          if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex','0');
-          card.addEventListener('keydown', function(e){
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              const btn = card.querySelector('button, a');
-              if (btn) btn.focus(), btn.click();
-            }
-          });
-        });
+  /* --- 1) Poblar tarjetas de servicios (sin alterar la estructura) --- */
+  onReady(function renderServices(){
+    const cards = [
+      { icon: 'bi-truck', title: 'Lavado Delicado', copy: 'Lavado especializado para prendas sensibles.', button: 'Ver servicio' },
+      { icon: 'bi-droplet', title: 'Tintorería', copy: 'Tratamientos en seco y eliminación de manchas.', button: 'Reservar' },
+      { icon: 'bi-speedometer2', title: 'Express 24h', copy: 'Recogida y entrega urgente en 24h cuando se requiere.', button: 'Pedir ahora' },
+      { icon: 'bi-truck', title: 'Recogida & Entrega', copy: 'Recogida semanal o puntual con seguimiento.', button: 'Solicitar' }
+    ];
 
-        const heroCards = document.querySelectorAll('.hero-card');
-        heroCards.forEach(card=>{
-          if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex','0');
-          card.addEventListener('keydown', function(e){
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              // do nothing by default, could open details
-            }
-          });
-        });
-      }
-      document.addEventListener('DOMContentLoaded', setupFocusableCards);
-    })();
+    const grid = document.getElementById('cardsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    cards.forEach((c) => {
+      const col = document.createElement('div');
+      col.className = 'col-12 col-md-6 col-lg-3 mb-4';
+      col.innerHTML = `
+        <div class="service-card card h-100 text-center" role="group" aria-label="${c.title}">
+          <div class="card-body d-flex flex-column align-items-center justify-content-center">
+            <i class="bi ${c.icon}" aria-hidden="true"></i>
+            <h5 class="card-title mt-2">${c.title}</h5>
+            <p class="card-text">${c.copy}</p>
+            <button class="btn btn-primary mt-2">${c.button}</button>
+          </div>
+        </div>`;
+      grid.appendChild(col);
+    });
+  });
 
-    // 2) Keyboard navigation for carousels: left/right when focus is within the carousel
-    (function(){
-      function initCarouselKeyNav(selector) {
-        const carouselEl = document.querySelector(selector);
-        if (!carouselEl) return;
-        carouselEl.addEventListener('keydown', function(e){
-          const tag = e.target.tagName.toLowerCase();
-          // ignore typing inside inputs
-          if (tag === 'input' || tag === 'textarea') return;
-          if (e.key === 'ArrowLeft') {
-            // prev
+  /* --- 2) Inicializar carouseles respetando prefers-reduced-motion --- */
+  onReady(function initCarousels(){
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const heroEl = document.querySelector('#heroCarousel');
+    if (heroEl && window.bootstrap && bootstrap.Carousel) {
+      const options = { interval: prefersReduce ? false : 3000, ride: prefersReduce ? false : 'carousel', pause: 'hover', wrap: true };
+      new bootstrap.Carousel(heroEl, options);
+    }
+
+    const testEl = document.querySelector('#carouselTestimonios');
+    if (testEl && window.bootstrap && bootstrap.Carousel) {
+      const opts = { interval: prefersReduce ? false : 6000, ride: prefersReduce ? false : 'carousel', pause: 'hover', wrap: true };
+      new bootstrap.Carousel(testEl, opts);
+    }
+  });
+
+  /* --- 3) Mejora de accesibilidad y navegación por teclado --- */
+  onReady(function accessibilitySetup(){
+    // 3.1 Hacer tarjetas focusables y permitir activar con Enter/Espacio
+    function makeCardsFocusable(selector){
+      document.querySelectorAll(selector).forEach(card => {
+        if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+        card.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            const prevBtn = carouselEl.querySelector('.carousel-control-prev');
-            if (prevBtn) prevBtn.click();
-          } else if (e.key === 'ArrowRight') {
-            e.preventDefault();
-            const nextBtn = carouselEl.querySelector('.carousel-control-next');
-            if (nextBtn) nextBtn.click();
+            const btn = card.querySelector('button, a');
+            if (btn) {
+              btn.focus();
+              btn.click();
+            }
           }
         });
-        // make carousel container focusable so user can tab into it
-        if (!carouselEl.hasAttribute('tabindex')) carouselEl.setAttribute('tabindex','0');
-      }
-      document.addEventListener('DOMContentLoaded', function(){
-        initCarouselKeyNav('#heroCarousel');
-        initCarouselKeyNav('#carouselTestimonios');
       });
-    })();
+    }
+    makeCardsFocusable('.service-card');
+    makeCardsFocusable('.pricing-card');
+    makeCardsFocusable('.hero-card');
 
-    // 3) Respect prefers-reduced-motion: stop auto-rotation if user prefers reduced motion
-    (function(){
-      document.addEventListener('DOMContentLoaded', function(){
-        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduce) {
-          // Pause hero carousel and testimonials
-          const hero = document.querySelector('#heroCarousel');
-          const tests = document.querySelector('#carouselTestimonios');
-          if (hero && bootstrap && bootstrap.Carousel) {
-            const instance = bootstrap.Carousel.getInstance(hero);
-            if (instance) instance.pause();
-          }
-          if (tests && bootstrap && bootstrap.Carousel) {
-            const instance2 = bootstrap.Carousel.getInstance(tests);
-            if (instance2) instance2.pause();
-          }
+    // 3.2 Navegación por flechas en carouseles
+    function enableCarouselKeys(selector){
+      const carousel = document.querySelector(selector);
+      if (!carousel) return;
+      if (!carousel.hasAttribute('tabindex')) carousel.setAttribute('tabindex','0');
+      carousel.addEventListener('keydown', function(e){
+        const tag = e.target.tagName.toLowerCase();
+        if (tag === 'input' || tag === 'textarea') return;
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = carousel.querySelector('.carousel-control-prev');
+          if (prev) prev.click();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = carousel.querySelector('.carousel-control-next');
+          if (next) next.click();
         }
       });
-    })();
+    }
+    enableCarouselKeys('#heroCarousel');
+    enableCarouselKeys('#carouselTestimonios');
 
-    // 4) Ensure skip link works and first focus lands correctly
-    (function(){
-      const skip = document.querySelector('.skip-link');
-      if (skip) {
-        skip.addEventListener('click', function(e){
-          // focus main content after jump
-          const main = document.getElementById('main');
-          if (main) {
-            setTimeout(()=> main.focus({preventScroll:true}), 10);
-          }
-        });
-      }
-      // give main role focusable for skip landing
+    // 3.3 Skip link focus landing
+    const skip = document.querySelector('.skip-link');
+    if (skip) skip.addEventListener('click', function(){
       const main = document.getElementById('main');
-      if (main && !main.hasAttribute('tabindex')) main.setAttribute('tabindex','-1');
-    })();
+      if (main) setTimeout(()=> main.focus({preventScroll:true}), 10);
+    });
+    const main = document.getElementById('main');
+    if (main && !main.hasAttribute('tabindex')) main.setAttribute('tabindex','-1');
 
-    // 5) Show back-to-top button on scroll and enable keyboard access
-    (function(){
-      const back = document.getElementById('backToTop');
-      window.addEventListener('scroll', function(){
-        if (!back) return;
-        if (window.scrollY > 300) back.classList.add('show'); else back.classList.remove('show');
-      });
-      if (back) {
-        back.addEventListener('click', function(){ window.scrollTo({ top:0, behavior:'smooth' }); });
-        back.setAttribute('title','Volver arriba');
-      }
-    })();
+    // 3.4 Mostrar estilos de foco para usuarios que usan teclado
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+    }, { once: true });
+  });
 
-    // 6) Populate service cards (kept same approach) and ensure accessibility attributes are applied
-    (function(){
-      const cards = [
-        { icon: 'bi-truck', title: 'Lavado Delicado', copy: 'Lavado especializado para prendas sensibles.', button: 'Ver servicio' },
-        { icon: 'bi-droplet', title: 'Tintorería', copy: 'Tratamientos en seco y eliminación de manchas.', button: 'Reservar' },
-        { icon: 'bi-speedometer2', title: 'Express 24h', copy: 'Recogida y entrega urgente en 24h cuando se requiere.', button: 'Pedir ahora' },
-        { icon: 'bi-truck', title: 'Recogida & Entrega', copy: 'Recogida semanal o puntual con seguimiento.', button: 'Solicitar' }
-      ];
-      function render() {
-        const grid = document.getElementById('cardsGrid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        cards.forEach((c, i)=>{
-          const col = document.createElement('div');
-          col.className = 'col-12 col-md-6 col-lg-3 mb-4';
-          col.innerHTML = `
-            <div class="service-card card h-100 text-center" role="group" aria-label="${c.title}">
-              <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                <i class="bi ${c.icon}" aria-hidden="true"></i>
-                <h5 class="card-title mt-2">${c.title}</h5>
-                <p class="card-text">${c.copy}</p>
-                <button class="btn btn-primary mt-2">${c.button}</button>
-              </div>
-            </div>`;
-          grid.appendChild(col);
-        });
-      }
-      document.addEventListener('DOMContentLoaded', function(){ render(); });
-    })();
+  /* --- 4) Botón "volver arriba" --- */
+  onReady(function backToTop(){
+    const back = document.getElementById('backToTop');
+    if (!back) return;
+    window.addEventListener('scroll', function(){
+      if (window.scrollY > 300) back.classList.add('show'); else back.classList.remove('show');
+    });
+    back.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    back.setAttribute('title','Volver arriba');
+  });
 
-    // 7) Small enhancement: ensure all interactive elements have visible focus when tabbing
-    (function(){
-      document.addEventListener('keydown', function(e){
-        // Add a class to body when first tab is pressed to show focus styles (optional)
-        if (e.key === 'Tab') document.body.classList.add('user-is-tabbing');
-      });
-    })();
+  /* --- 5) Manejo simple del formulario del footer (demo) --- */
+  onReady(function footerForm(){
+    const form = document.getElementById('contactFormFooter');
+    if (!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      alert('Formulario enviado (demo). Gracias.');
+      form.reset();
+    });
+  });
   </script>
+  <!-- ================= SCRIPTS (JS) END ================= -->
+
 </body>
 </html>
